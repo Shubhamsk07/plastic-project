@@ -4,6 +4,7 @@ import { Contact } from "./Contact";
 
 export function Navbar() {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Open the form
   const openForm = () => setIsFormOpen(true);
@@ -11,68 +12,123 @@ export function Navbar() {
   // Close the form
   const closeForm = () => setIsFormOpen(false);
 
+  // Toggle the hamburger menu
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
     <div>
-        <motion.div
-    
-      initial={{ y: -150, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{
-        type: "spring",
-        stiffness: 75,
-        damping: 10,
-        duration: 1.5,
-        opacity: { duration: 0.5 },
-      }}
-      className="bg-color1 h-24  flex justify-between"
-    >
-      <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 75,
-          damping: 11,
-          delay: 0.5,
-          duration: 1.5,
-          opacity: { duration: 0.5 },
-        }}
-        className="mt-7 ml-[90px]"
-      >
-        <Logo />
-      </motion.div>
       <motion.div
         initial={{ y: -150, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
           type: "spring",
           stiffness: 75,
-          delay: 0.7,
           damping: 10,
-          duration: 1.8,
+          duration: 1.5,
           opacity: { duration: 0.5 },
         }}
-        className="text-white flex gap-14 mt-9 pr-[200px] montserrat-font"
+        className="bg-color1 h-24 flex justify-between items-center px-6 md:px-12"
       >
-        <button className="cursor-pointer h-1 hover:text-gray-300">Home</button>
-        <button className="cursor-pointer h-1 hover:text-gray-300">Products</button>
-        <button className="cursor-pointer h-1 hover:text-gray-300 ">Industries</button>
-        <button className="cursor-pointer h-1 hover:text-gray-300 ">About</button>
-        <div onClick={openForm} className="cursor-pointer relative bottom-[9px]">
-          <Group />
-          <h3 className="relative hover:text-gray-300 bottom-7 left-5 font-bold montserrat-font">
-            Contact
-          </h3>
+        {/* Logo Section */}
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 75,
+            damping: 11,
+            delay: 0.5,
+            duration: 1.5,
+            opacity: { duration: 0.5 },
+          }}
+          className="mt-7 md:px-0 md:ml-0 md:mr-10 lg:ml-[50px]"
+        >
+          <Logo />
+        </motion.div>
+
+        {/* Hamburger Button for Mobile */}
+        <div className="md:hidden block">
+          <button onClick={toggleMenu} className="text-white focus:outline-none">
+            {isMenuOpen ? (
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            ) : (
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            )}
+          </button>
         </div>
+
+        {/* Main Navigation (Hidden in mobile) */}
+        <motion.div
+          initial={{ y: -150, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 75,
+            delay: 0.7,
+            damping: 10,
+            duration: 1.8,
+            opacity: { duration: 0.5 },
+          }}
+          className="hidden md:flex text-white gap-14 mt-2 pr-[200px] montserrat-font"
+        >
+          <button className="cursor-pointer hover:text-gray-300">Home</button>
+          <button className="cursor-pointer hover:text-gray-300">Products</button>
+          <button className="cursor-pointer hover:text-gray-300">Industries</button>
+          <button className="cursor-pointer hover:text-gray-300">About</button>
+          <div onClick={openForm} className="cursor-pointer relative  bottom-[-9px]">
+            <Group />
+            <h3 className="relative hover:text-gray-300 bottom-7 left-5 font-bold montserrat-font">
+              Contact
+            </h3>
+          </div>
+        </motion.div>
+
+        {/* Mobile Menu (visible when isMenuOpen is true) */}
+        {isMenuOpen && (
+          <div className="md:hidden  flex flex-col gap-2 absolute top-24 left-0 w-full bg-color1 text-white py-4">
+            <button onClick={toggleMenu} className="block text-center">Home</button>
+            <button onClick={toggleMenu} className="block text-center">Products</button>
+            <button onClick={toggleMenu} className="block text-center">Industries</button>
+            <button onClick={toggleMenu} className="block text-center">About</button>
+            <button onClick={openForm} className="block font-bold text-center text-btn1 ">Contact</button>
+          </div>
+        )}
       </motion.div>
-      
-    </motion.div>
-    <div className="relative">
-   <Contact isOpen={isFormOpen} onClose={closeForm} />
-    </div>
+
+      {/* Contact Form */}
+      <div className="relative">
+        <Contact isOpen={isFormOpen} onClose={closeForm} />
+      </div>
     </div>
   );
 }
+
 function Group(){
     return <svg width="115" height="40" viewBox="0 0 115 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="7.12402" width="107.876" height="33.0769" fill="black"/>
@@ -80,6 +136,7 @@ function Group(){
 </svg>
 
 }
+
 function Logo(){
     return <svg width="164" height="60" viewBox="0 0 164 60" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 2C0 0.89543 0.89543 0 2 0H162C163.105 0 164 0.895431 164 2V37C164 38.1046 163.105 39 162 39H2C0.895429 39 0 38.1046 0 37V2Z" fill="#5431A6"/>
