@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.montserrat-font {
+    font-family: "Montserrat", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+#root {
+    overflow-x: hidden;
+}
